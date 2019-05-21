@@ -16,7 +16,7 @@ const Footer = () => (
                         rel="noopener noreferrer"
                         className="facebook"
                     >
-                        <i className="fab fa-facebook fa-2x" />
+                        <i className="fab fa-facebook-f fa-2x" />
                     </a>
                 </li>
                 <li>
