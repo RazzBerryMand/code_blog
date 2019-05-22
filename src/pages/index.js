@@ -7,66 +7,58 @@ import { Row, Col } from 'reactstrap'
 import Sidebar from "../components/Sidebar"
 
 const IndexPage = () => (
-  <Layout>
+  <Layout pageTitle="Code Blog">
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <h1>Home page</h1>
-    <Row>
-      <Col md="8">
-        <StaticQuery
-          query={indexQuery}
-          render={data => {
-            return (
-              <div>
-                {data.allMarkdownRemark.edges.map(({ node }) => (
-                  <Post
-                    key={node.id}
-                    title={node.frontmatter.title}
-                    author={node.frontmatter.author}
-                    slug={node.fields.slug}
-                    date={node.frontmatter.date}
-                    body={node.excerpt}
-                    fluid={node.frontmatter.image.childImageSharp.fluid}
-                    tags={node.frontmatter.tags}
-                  />
-                ))}
-              </div>
-            )
-          }}
-        />
-      </Col>
-      <Col md="4">
-        <Sidebar />
-      </Col>
-    </Row>
+    <StaticQuery
+      query={indexQuery}
+      render={data => {
+        return (
+          <div>
+            {data.allMarkdownRemark.edges.map(({ node }) => (
+              <Post
+                key={node.id}
+                title={node.frontmatter.title}
+                author={node.frontmatter.author}
+                slug={node.fields.slug}
+                date={node.frontmatter.date}
+                body={node.excerpt}
+                fluid={node.frontmatter.image.childImageSharp.fluid}
+                tags={node.frontmatter.tags}
+              />
+            ))}
+          </div>
+        )
+      }}
 
+    />
   </Layout>
 )
 
 const indexQuery = graphql`
   query {
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC }) {
       edges {
-        node {
-          id
+    node {
+      id
           frontmatter {
-            title
+      title
             date(formatString: "MMM Do YYY")
-            author
-          tags
+    author
+  tags
             image {
-              childImageSharp {
-                fluid(maxWidth: 600) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-          }
-          fields { slug }
-          excerpt
-        }
-      }
+      childImageSharp {
+    fluid(maxWidth: 600) {
+      ...GatsbyImageSharpFluid
+    }
     }
   }
+}
+          fields {slug}
+    excerpt
+  }
+}
+}
+}
 `
 
 export default IndexPage
