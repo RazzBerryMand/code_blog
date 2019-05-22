@@ -5,11 +5,13 @@ import SEO from '../components/seo'
 import { Badge, Card, CardBody, CardSubtitle } from 'reactstrap'
 import Img from 'gatsby-image'
 import { slugify } from '../util/utilityFunctions'
+import authors from '../util/authors'
 
 const SinglePost = ({ data }) => {
     const post = data.markdownRemark.frontmatter
+    const author = authors.find(x => x.name === post.author)
     return (
-        <Layout pageTitle={post.title}>
+        <Layout pageTitle={post.title} postAuthor={author} authorImageFluid={data.file.childImageSharp.fluid}>
             <SEO title={postMessage.title} />
             <Card>
                 <Img className="card-image-top" fluid={post.image.childImageSharp.fluid} />
@@ -35,7 +37,7 @@ const SinglePost = ({ data }) => {
 }
 
 export const postQuery = graphql`
-query blogPostBySlug($slug: String!){
+query blogPostBySlug($slug: String!, $imageUrl: String!){
     markdownRemark(fields: {slug: { eq: $slug}}){
         id
         html
@@ -53,7 +55,14 @@ query blogPostBySlug($slug: String!){
             }
         }
     }
+file(relativePath: {eq: $imageUrl}){
+childImageSharp{
+    fluid(maxWidth: 300){
+        ...GatsbyImageSharpFluid
+    }
+}
+}
 }
 `
 
-export default SinglePost
+export default SinglePost 
