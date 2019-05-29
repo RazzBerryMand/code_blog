@@ -41,12 +41,29 @@ const SinglePost = ({ data, pageContext }) => {
             <div className="text-center social-share-links">
                 <ul>
                     <li>
-                        <a href={'https://www.facebook.com/sharer/sharer.php?u=' + baseUrl + pageContext.slug} className="facebook" target="_blank" rel="noopener noreferrer">
+                        <a href={'https://www.facebook.com/sharer/sharer.php?u=' +
+                            baseUrl +
+                            pageContext.slug
+                        }
+                            className="facebook" target="_blank" rel="noopener noreferrer">
                             <i className="fab fa-facebook-f fa-2x"></i>
                         </a>
                     </li>
                     <li>
-                        <a href={'https://www.twitter.com/share?url=' + baseUrl + pageContext.slug + '&text-' + post.title + '&via' + 'twitterHandle'} className="twitter" target="_blank" rel="noopener noreferrer">
+                        <a
+                            href={
+                                'https://twitter.com/share?url=' +
+                                baseUrl +
+                                pageContext.slug +
+                                '&text=' +
+                                post.title +
+                                '&via' +
+                                'twitterHandle'
+                            }
+                            className="twitter"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <i className="fab fa-twitter fa-2x"></i>
                         </a>
                     </li>
@@ -71,32 +88,32 @@ const SinglePost = ({ data, pageContext }) => {
 }
 
 export const postQuery = graphql`
-query blogPostBySlug($slug: String!, $imageUrl: String!){
-    markdownRemark(fields: {slug: { eq: $slug}}){
-        id
+                        query blogPostBySlug($slug: String!, $imageUrl: String!){
+                            markdownRemark(fields: {slug: {eq: $slug}}){
+                            id
         html
-        frontmatter{
-            title
+                        frontmatter{
+                            title
             author
-            date(formatString: "MMM Do YYY")
-            tags
+                        date(formatString: "MMM Do YYY")
+                        tags
             image{
-                childImageSharp{
-                    fluid(maxWidth: 700){
-                        ...GatsbyImageSharpFluid
+                            childImageSharp{
+                        fluid(maxWidth: 700){
+                            ...GatsbyImageSharpFluid
+                        }
+                        }
                     }
                 }
             }
-        }
-    }
 file(relativePath: {eq: $imageUrl}){
-childImageSharp{
-    fluid(maxWidth: 300){
-        ...GatsbyImageSharpFluid
-    }
-}
-}
-}
-`
+                            childImageSharp{
+                        fluid(maxWidth: 300){
+                            ...GatsbyImageSharpFluid
+                        }
+                        }
+                        }
+                        }
+                        `
 
 export default SinglePost 
